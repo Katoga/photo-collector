@@ -1,0 +1,11 @@
+# Eclipse
+/.project
+/.settings
+/.buildpath
+
+# Nette
+/app/config/config.local.neon
+
+# Composer
+/composer.lock
+/vendor
