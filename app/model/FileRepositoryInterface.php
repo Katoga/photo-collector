@@ -17,4 +17,12 @@ interface FileRepositoryInterface
 	 * @throws \InvalidArgumentException
 	 */
 	public function upload($user, $event, array $fileUploads);
+
+	/**
+	 *
+	 * @param string $event
+	 * @param string $user
+	 * @return string[]
+	 */
+	public function get($event = '', $user = '');
 }

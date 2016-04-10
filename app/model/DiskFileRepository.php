@@ -2,6 +2,7 @@
 namespace App\Model;
 
 use Nette\Http\FileUpload;
+use Nette\Utils\Finder;
 use Nette\Utils\Strings;
 
 /**
@@ -24,7 +25,7 @@ class DiskFileRepository implements FileRepositoryInterface
 	 */
 	public function __construct($dataRootDir)
 	{
-		$this->dataRootDir = $dataRootDir;
+		$this->dataRootDir = realpath($dataRootDir);
 	}
 
 	/**
@@ -47,6 +48,27 @@ class DiskFileRepository implements FileRepositoryInterface
 					throw new \InvalidArgumentException(sprintf('Unsupported type of file "%s": %s"!', $fileUpload->name, $fileUpload->contentType));
 			}
 		}
+	}
+
+	/**
+	 *
+	 * {@inheritDoc}
+	 * @see \App\Model\FileRepositoryInterface::get()
+	 */
+	public function get($event = '', $user = '')
+	{
+		$files = [];
+		$directory = sprintf('%s/%s/%s', $this->dataRootDir, $event, $user);
+
+		try {
+			foreach (Finder::findFiles('*.jpeg', '*.jpg')->in($directory) as $path => $file) {
+				$files[] = $path;
+			}
+		} catch (\UnexpectedValueException $e) {
+			dump($e->getMessage());
+		}
+
+		return $files;
 	}
 
 	/**

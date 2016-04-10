@@ -4,6 +4,7 @@ namespace App\Presenters;
 use App\Components\EventMenu;
 use App\Components\UserMenu;
 use App\Model\EventRepositoryInterface;
+use App\Model\FileRepositoryInterface;
 use App\Model\UserRepositoryInterface;
 use Nette\Application\UI\Presenter;
 
@@ -29,6 +30,12 @@ class ViewPresenter extends Presenter
 
 	/**
 	 *
+	 * @var FileRepositoryInterface
+	 */
+	protected $fileRepository;
+
+	/**
+	 *
 	 * @param UserRepositoryInterface $userRepository
 	 */
 	public function injectUserRepository(UserRepositoryInterface $userRepository)
@@ -45,15 +52,35 @@ class ViewPresenter extends Presenter
 		$this->eventRepository = $eventRepository;
 	}
 
+	/**
+	 *
+	 * @param FileRepositoryInterface $fileRepository
+	 */
+	public function injectFileRepository(FileRepositoryInterface $fileRepository)
+	{
+		$this->fileRepository= $fileRepository;
+	}
+
+	/**
+	 *
+	 * @param string $event
+	 */
 	public function renderEvent($event)
 	{
 		$this->template->event = $event;
 	}
 
+	/**
+	 *
+	 * @param string $event
+	 * @param string $user
+	 */
 	public function renderUser($event, $user)
 	{
 		$this->template->event = $event;
 		$this->template->user = $user;
+
+		$this->template->files = $this->fileRepository->get($event, $user);
 	}
 
 	/**
