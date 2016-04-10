@@ -1,10 +1,13 @@
 <?php
-
 namespace App\Presenters;
 
-use Nette;
+use Nette\Application\UI\Presenter;
 
-
-class HomepagePresenter extends Nette\Application\UI\Presenter
+/**
+ *
+ * @author Katoga <katoga.cz@hotmail.com>
+ * @since 2016-04-10
+ */
+class HomepagePresenter extends Presenter
 {
 }
