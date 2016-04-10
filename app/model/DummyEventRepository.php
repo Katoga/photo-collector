@@ -1,6 +1,8 @@
 <?php
 namespace App\Model;
 
+use Nette\Utils\Strings;
+
 /**
  *
  * @author Katoga <katoga.cz@hotmail.com>
@@ -12,14 +14,15 @@ class DummyEventRepository implements EventRepositoryInterface
 	/**
 	 *
 	 * {@inheritDoc}
+	 *
 	 * @see \App\Model\EventRepositoryInterface::getEvents()
 	 */
 	public function getEvents()
 	{
 		$events = [
 			'' => '',
-			'ciaf_2015' => 'CIAF 2015',
-			'silver_a_2015' => 'Silver A 1025'
+			Strings::webalize('ciaf_2015') => 'CIAF 2015',
+			Strings::webalize('silver_a_2015') => 'Silver A 1025'
 		];
 
 		return $events;

@@ -1,7 +1,8 @@
 <?php
 namespace App\Presenters;
 
-use App\Components\Menu;
+use App\Components\EventMenu;
+use App\Components\UserMenu;
 use App\Model\EventRepositoryInterface;
 use App\Model\UserRepositoryInterface;
 use Nette\Application\UI\Presenter;
@@ -44,8 +45,32 @@ class ViewPresenter extends Presenter
 		$this->eventRepository = $eventRepository;
 	}
 
-	protected function createComponentMenu($level)
+	public function renderEvent($event)
 	{
-		return new Menu($this->userRepository, $this->eventRepository);
+		$this->template->event = $event;
+	}
+
+	public function renderUser($event, $user)
+	{
+		$this->template->event = $event;
+		$this->template->user = $user;
+	}
+
+	/**
+	 *
+	 * @return EventMenu
+	 */
+	protected function createComponentEventMenu()
+	{
+		return new EventMenu($this->eventRepository);
+	}
+
+	/**
+	 *
+	 * @return UserMenu
+	 */
+	protected function createComponentUserMenu()
+	{
+		return new UserMenu($this->userRepository);
 	}
 }
