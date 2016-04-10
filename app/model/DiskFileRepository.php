@@ -9,7 +9,7 @@ use Nette\Utils\Strings;
  * @author Katoga <katoga.cz@hotmail.com>
  * @since 2016-04-10
  */
-class Uploader implements UploaderInterface
+class DiskFileRepository implements FileRepositoryInterface
 {
 
 	/**

@@ -7,7 +7,7 @@ use Nette\Http\FileUpload;
  * @author Katoga <katoga.cz@hotmail.com>
  * @since 2016-04-10
  */
-interface UploaderInterface
+interface FileRepositoryInterface
 {
 	/**
 	 *

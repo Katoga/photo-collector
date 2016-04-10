@@ -20,7 +20,7 @@ session:
 
 services:
 	router: App\RouterFactory::createRouter
-	uploader: App\Model\Uploader(%dataRootDir%)
+	fileRepository: App\Model\DiskFileRepository(%dataRootDir%)
 	userRepository: App\Model\DummyUserRepository
 	eventRepository: App\Model\DummyEventRepository
 	

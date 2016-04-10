@@ -2,12 +2,13 @@
 namespace App\Presenters;
 
 use App\Model\EventRepositoryInterface;
-use App\Model\Uploader;
+use App\Model\File;
 use App\Model\UserRepositoryInterface;
 use Nette\Application\UI\Form;
 use Nette\Application\UI\Presenter;
 use Nette\Utils\ArrayHash;
-use App\Model\UploaderInterface;
+use App\Model\FileInterface;
+use App\Model\FileRepositoryInterface;
 
 /**
  *
@@ -24,9 +25,9 @@ class UploadPresenter extends Presenter
 
 	/**
 	 *
-	 * @var UploaderInterface
+	 * @var FileRepositoryInterface
 	 */
-	protected $uploader;
+	protected $fileRepository;
 
 	/**
 	 *
@@ -42,11 +43,11 @@ class UploadPresenter extends Presenter
 
 	/**
 	 *
-	 * @param UploaderInterface $uploader
+	 * @param FileRepositoryInterface $fileRepository
 	 */
-	public function injectUploader(UploaderInterface $uploader)
+	public function injectFileRepository(FileRepositoryInterface $fileRepository)
 	{
-		$this->uploader = $uploader;
+		$this->fileRepository = $fileRepository;
 	}
 
 	/**
@@ -90,7 +91,7 @@ class UploadPresenter extends Presenter
 
 	public function uploadFormSuccess(Form $form, ArrayHash $values)
 	{
-		$this->uploader->process($values->user, $values->event, $values->photos);
+		$this->fileRepository->process($values->user, $values->event, $values->photos);
 		$this->flashMessage('Successfuly uploaded files.');
 		$this->redirect('Upload:');
 	}
