@@ -30,9 +30,9 @@ class DiskFileRepository implements FileRepositoryInterface
 	/**
 	 *
 	 * {@inheritDoc}
-	 * @see \App\Model\UploaderInterface::process()
+	 * @see \App\Model\FileRepositoryInterface::upload()
 	 */
-	public function process($user, $event, array $fileUploads)
+	public function upload($user, $event, array $fileUploads)
 	{
 		foreach ($fileUploads as $fileUpload) {
 			/* @var $fileUpload \Nette\Http\FileUpload */

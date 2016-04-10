@@ -16,5 +16,5 @@ interface FileRepositoryInterface
 	 * @param FileUpload[] $fileUploads
 	 * @throws \InvalidArgumentException
 	 */
-	public function process($user, $event, array $fileUploads);
+	public function upload($user, $event, array $fileUploads);
 }

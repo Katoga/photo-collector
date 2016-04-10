@@ -91,7 +91,7 @@ class UploadPresenter extends Presenter
 
 	public function uploadFormSuccess(Form $form, ArrayHash $values)
 	{
-		$this->fileRepository->process($values->user, $values->event, $values->photos);
+		$this->fileRepository->upload($values->user, $values->event, $values->photos);
 		$this->flashMessage('Successfuly uploaded files.');
 		$this->redirect('Upload:');
 	}
