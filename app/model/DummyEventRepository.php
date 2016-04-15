@@ -20,7 +20,6 @@ class DummyEventRepository implements EventRepositoryInterface
 	public function getEvents()
 	{
 		$events = [
-			'' => '',
 			Strings::webalize('ciaf_2015') => 'CIAF 2015',
 			Strings::webalize('silver_a_2015') => 'Silver A 1025'
 		];

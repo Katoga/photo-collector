@@ -7,7 +7,6 @@ use App\Model\UserRepositoryInterface;
 use Nette\Application\UI\Form;
 use Nette\Application\UI\Presenter;
 use Nette\Utils\ArrayHash;
-use App\Model\FileInterface;
 use App\Model\FileRepositoryInterface;
 
 /**
@@ -72,8 +71,10 @@ class UploadPresenter extends Presenter
 	{
 		$form = new Form();
 
-		$form->addSelect('user', 'User', $this->userRepository->getUsers())->setRequired();
-		$form->addSelect('event', 'Event', $this->eventRepository->getEvents())->setRequired();
+		$form->addSelect('user', 'User', $this->getUserOptions())
+			->setRequired();
+		$form->addSelect('event', 'Event', $this->getEventOptions())
+			->setRequired();
 		$form->addMultiUpload('photos', 'File')
 			->addRule(Form::MIN_LENGTH, 'Add %d or more files!', 1)
 			->addRule(Form::MIME_TYPE, 'File has to be JPEG or ZIP!', self::ALLOWED_MIME_TYPES);
@@ -94,5 +95,23 @@ class UploadPresenter extends Presenter
 		$this->fileRepository->upload($values->user, $values->event, $values->photos);
 		$this->flashMessage('Successfuly uploaded files.');
 		$this->redirect('Upload:');
+	}
+
+	/**
+	 *
+	 * @return array
+	 */
+	protected function getUserOptions()
+	{
+		return $this->userRepository->getUsers();
+	}
+
+	/**
+	 *
+	 * @return array
+	 */
+	protected function getEventOptions()
+	{
+		return $this->eventRepository->getEvents();
 	}
 }

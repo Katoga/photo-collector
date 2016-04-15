@@ -17,7 +17,6 @@ class DummyUserRepository implements UserRepositoryInterface
 	public function getUsers()
 	{
 		$users = [
-			'' => '',
 			'pepa' => 'Josef',
 			'lojza' => 'Alois'
 		];
