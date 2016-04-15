@@ -25,7 +25,7 @@ class DiskFileRepository implements FileRepositoryInterface
 	 */
 	public function __construct($dataRootDir)
 	{
-		$this->dataRootDir = realpath($dataRootDir);
+		$this->dataRootDir = $dataRootDir;
 	}
 
 	/**
@@ -62,7 +62,14 @@ class DiskFileRepository implements FileRepositoryInterface
 
 		try {
 			foreach (Finder::findFiles('*.jpeg', '*.jpg')->in($directory) as $path => $file) {
-				$files[] = $path;
+				$filePath = explode('/', trim(str_replace($this->dataRootDir, '', $path), '/'));
+				$pathParts = [
+					'event',
+					'user',
+					'filename'
+				];
+				$filePath = array_combine($pathParts, $filePath);
+				$files[] = $filePath;
 			}
 		} catch (\UnexpectedValueException $e) {
 			dump($e->getMessage());
@@ -91,7 +98,10 @@ class DiskFileRepository implements FileRepositoryInterface
 	 */
 	protected function getDestinationFilename($user, $event, $name)
 	{
-		return sprintf('%s/%s', $this->getDestinationDirectory($user, $event), $name);
+		$pathInfo = pathinfo($name);
+
+		$filename = sprintf('%s.%s', Strings::webalize($pathInfo['filename']), $pathInfo['extension']);
+		return sprintf('%s/%s', $this->getDestinationDirectory($user, $event), $filename);
 	}
 
 	/**

@@ -1,4 +1,11 @@
 {block content}
 {control eventMenu}
 {control userMenu $event}
+{if $files}
+{foreach $files as $file}
+<img src="{plink File:default $file[event], $file[user], $file[filename]}" alt="{$file[filename]}" />
+{/foreach}
+{else}
+nothing
+{/if}
 {/block}
