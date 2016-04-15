@@ -11,7 +11,7 @@ interface UserRepositoryInterface
 
 	/**
 	 *
-	 * @return string[]
+	 * @return array
 	 */
 	public function getUsers();
 }

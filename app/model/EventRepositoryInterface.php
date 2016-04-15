@@ -10,7 +10,7 @@ interface EventRepositoryInterface
 {
 	/**
 	 *
-	 * @return string[]
+	 * @return array
 	 */
 	public function getEvents();
 }

@@ -22,7 +22,7 @@ interface FileRepositoryInterface
 	 *
 	 * @param string $event
 	 * @param string $user
-	 * @return string[]
+	 * @return array
 	 */
 	public function get($event = '', $user = '');
 }
