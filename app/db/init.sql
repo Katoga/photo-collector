@@ -20,3 +20,13 @@ CREATE TABLE "users" (
 CREATE UNIQUE INDEX "users_name" ON "users" ("name");
 CREATE UNIQUE INDEX "users_login" ON "users" ("login");
 
+INSERT INTO "users" (
+	"name",
+	"login",
+	"password"
+)
+VALUES (
+	"Admin",
+	"admin",
+	"$2y$10$TYulxqRbX3yVaE13RoR6TeaIG/NCagmKytaqWTaSUk8r8DfuWX.vS"
+);
