@@ -3,7 +3,7 @@ namespace App\Presenters;
 
 use App\Model\EventRepositoryInterface;
 use App\Model\FileRepositoryInterface;
-use App\Model\UserRepositoryInterface;
+use App\Model\AuthorRepositoryInterface;
 
 /**
  *
@@ -15,9 +15,9 @@ class FilePresenter extends BasePresenter
 
 	/**
 	 *
-	 * @var UserRepositoryInterface
+	 * @var AuthorRepositoryInterface
 	 */
-	protected $userRepository;
+	protected $authorRepository;
 
 	/**
 	 *
@@ -33,11 +33,11 @@ class FilePresenter extends BasePresenter
 
 	/**
 	 *
-	 * @param UserRepositoryInterface $userRepository
+	 * @param AuthorRepositoryInterface $authorRepository
 	 */
-	public function injectUserRepository(UserRepositoryInterface $userRepository)
+	public function injectAuthorRepository(AuthorRepositoryInterface $authorRepository)
 	{
-		$this->userRepository = $userRepository;
+		$this->authorRepository = $authorRepository;
 	}
 
 	/**
@@ -61,13 +61,13 @@ class FilePresenter extends BasePresenter
 	/**
 	 *
 	 * @param string $event
-	 * @param string $user
+	 * @param string $author
 	 * @param string $filename
 	 */
-	public function renderDefault($event, $user, $filename)
+	public function renderDefault($event, $author, $filename)
 	{
 		$this->template->event = $event;
-		$this->template->user = $user;
+		$this->template->author = $author;
 		$this->template->filename = $filename;
 	}
 }

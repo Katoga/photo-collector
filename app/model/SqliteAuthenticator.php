@@ -37,14 +37,14 @@ class SqliteAuthenticator extends Object implements IAuthenticator
 	 */
 	public function authenticate(array $credentials)
 	{
-		list ($username, $password) = $credentials;
+		list ($login, $password) = $credentials;
 
-		$row = $this->db->table(SqliteUserRepository::TABLE)
-			->where('login', $username)
+		$row = $this->db->table(SqliteAuthorRepository::TABLE)
+			->where('login', $login)
 			->fetch();
 
 		if (!$row) {
-			throw new AuthenticationException('User not found.');
+			throw new AuthenticationException('Author not found.');
 		}
 
 		if (!Passwords::verify($password, $row->password)) {

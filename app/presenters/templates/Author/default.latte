@@ -1,0 +1,8 @@
+{block content}
+{control newAuthorForm}
+<ul n:if="$authors">
+<li n:foreach="$authors as $authorId => $author">
+{$authorId}: {$author['name']} <span n:if="$author['roles']">({implode(', ', $author['roles'])})</span>
+</li>
+</ul>
+{/block}

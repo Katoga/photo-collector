@@ -6,21 +6,21 @@ namespace App\Model;
  * @author Katoga <katoga.cz@hotmail.com>
  * @since 2016-04-16
  */
-interface UserRepositoryInterface
+interface AuthorRepositoryInterface
 {
 
 	/**
 	 *
 	 * @return array
 	 */
-	public function getUsers();
+	public function getAuthors();
 
 	/**
 	 *
 	 * @param string $name
 	 * @param string $password
 	 * @param array $roles
-	 * @return int ID of new user
+	 * @return int ID of new author
 	 */
-	public function addUser($name, $password, array $roles);
+	public function addAuthor($name, $password, array $roles);
 }

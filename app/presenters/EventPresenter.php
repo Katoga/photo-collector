@@ -24,7 +24,7 @@ class EventPresenter extends BasePresenter
 	{
 		parent::startup();
 
-		if (!$this->user->isInRole('admin')) {
+		if (!$this->getUser()->isInRole('admin')) {
 			$this->redirect('Homepage:');
 		}
 	}

@@ -11,18 +11,18 @@ interface FileRepositoryInterface
 {
 	/**
 	 *
-	 * @param string $user
+	 * @param string $author
 	 * @param string $event
 	 * @param FileUpload[] $fileUploads
 	 * @throws \InvalidArgumentException
 	 */
-	public function upload($user, $event, array $fileUploads);
+	public function upload($author, $event, array $fileUploads);
 
 	/**
 	 *
 	 * @param string $event
-	 * @param string $user
+	 * @param string $author
 	 * @return array
 	 */
-	public function get($event = '', $user = '');
+	public function get($event = '', $author = '');
 }

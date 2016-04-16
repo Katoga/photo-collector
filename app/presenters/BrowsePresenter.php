@@ -2,10 +2,10 @@
 namespace App\Presenters;
 
 use App\Components\EventMenu;
-use App\Components\UserMenu;
+use App\Components\AuthorMenu;
 use App\Model\EventRepositoryInterface;
 use App\Model\FileRepositoryInterface;
-use App\Model\UserRepositoryInterface;
+use App\Model\AuthorRepositoryInterface;
 
 /**
  *
@@ -17,9 +17,9 @@ class BrowsePresenter extends BasePresenter
 
 	/**
 	 *
-	 * @var UserRepositoryInterface
+	 * @var AuthorRepositoryInterface
 	 */
-	protected $userRepository;
+	protected $authorRepository;
 
 	/**
 	 *
@@ -35,11 +35,11 @@ class BrowsePresenter extends BasePresenter
 
 	/**
 	 *
-	 * @param UserRepositoryInterface $userRepository
+	 * @param AuthorRepositoryInterface $authorRepository
 	 */
-	public function injectUserRepository(UserRepositoryInterface $userRepository)
+	public function injectAuthorRepository(AuthorRepositoryInterface $authorRepository)
 	{
-		$this->userRepository = $userRepository;
+		$this->authorRepository = $authorRepository;
 	}
 
 	/**
@@ -72,14 +72,14 @@ class BrowsePresenter extends BasePresenter
 	/**
 	 *
 	 * @param string $event
-	 * @param string $user
+	 * @param string $author
 	 */
-	public function renderUser($event, $user)
+	public function renderAuthor($event, $author)
 	{
 		$this->template->event = $event;
-		$this->template->user = $user;
+		$this->template->author = $author;
 
-		$this->template->files = $this->fileRepository->get($event, $user);
+		$this->template->files = $this->fileRepository->get($event, $author);
 	}
 
 	/**
@@ -93,10 +93,10 @@ class BrowsePresenter extends BasePresenter
 
 	/**
 	 *
-	 * @return UserMenu
+	 * @return AuthorMenu
 	 */
-	protected function createComponentUserMenu()
+	protected function createComponentAuthorMenu()
 	{
-		return new UserMenu($this->userRepository);
+		return new AuthorMenu($this->authorRepository);
 	}
 }

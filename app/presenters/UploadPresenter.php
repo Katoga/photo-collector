@@ -4,7 +4,7 @@ namespace App\Presenters;
 use App\Model\EventRepositoryInterface;
 use App\Model\File;
 use App\Model\FileRepositoryInterface;
-use App\Model\UserRepositoryInterface;
+use App\Model\AuthorRepositoryInterface;
 use Nette\Application\UI\Form;
 use Nette\Utils\ArrayHash;
 
@@ -29,9 +29,9 @@ class UploadPresenter extends BasePresenter
 
 	/**
 	 *
-	 * @var UserRepositoryInterface
+	 * @var AuthorRepositoryInterface
 	 */
-	protected $userRepository;
+	protected $authorRepository;
 
 	/**
 	 *
@@ -50,11 +50,11 @@ class UploadPresenter extends BasePresenter
 
 	/**
 	 *
-	 * @param UserRepositoryInterface $userRepository
+	 * @param AuthorRepositoryInterface $authorRepository
 	 */
-	public function injectUserRepository(UserRepositoryInterface $userRepository)
+	public function injectAuthorRepository(AuthorRepositoryInterface $authorRepository)
 	{
-		$this->userRepository = $userRepository;
+		$this->authorRepository = $authorRepository;
 	}
 
 	/**
@@ -70,7 +70,7 @@ class UploadPresenter extends BasePresenter
 	{
 		$form = new Form();
 
-		$form->addHidden('user', $this->getUser()->getId());
+		$form->addHidden('author', $this->getUser()->getId());
 		$form->addSelect('event', 'Event', $this->getEventOptions())
 			->setRequired();
 		$form->addMultiUpload('photos', 'File')
@@ -90,7 +90,7 @@ class UploadPresenter extends BasePresenter
 
 	public function uploadFormSuccess(Form $form, ArrayHash $values)
 	{
-		$this->fileRepository->upload($values->user, $values->event, $values->photos);
+		$this->fileRepository->upload($values->author, $values->event, $values->photos);
 		$this->flashMessage('Successfuly uploaded files.');
 		$this->redirect('Upload:');
 	}
@@ -99,9 +99,9 @@ class UploadPresenter extends BasePresenter
 	 *
 	 * @return array
 	 */
-	protected function getUserOptions()
+	protected function getAuthorOptions()
 	{
-		return $this->userRepository->getUsers();
+		return $this->authorRepository->getAuthors();
 	}
 
 	/**

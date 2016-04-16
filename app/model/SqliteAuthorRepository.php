@@ -10,10 +10,10 @@ use Nette\Security\Passwords;
  * @author Katoga <katoga.cz@hotmail.com>
  * @since 2016-04-16
  */
-class SqliteUserRepository implements UserRepositoryInterface
+class SqliteAuthorRepository implements AuthorRepositoryInterface
 {
 
-	const TABLE = 'users';
+	const TABLE = 'authors';
 
 	/**
 	 *
@@ -32,14 +32,14 @@ class SqliteUserRepository implements UserRepositoryInterface
 
 	/**
 	 *
-	 * @see \App\Model\UserRepositoryInterface::getUsers()
+	 * @see \App\Model\AuthorRepositoryInterface::getAuthors()
 	 */
-	public function getUsers()
+	public function getAuthors()
 	{
-		$users = [];
+		$authors = [];
 
-		$res = $this->db->table('users')
-			->select('user_id')
+		$res = $this->db->table('authors')
+			->select('author_id')
 			->select('name')
 			->select('login')
 			->select('roles')
@@ -52,21 +52,21 @@ class SqliteUserRepository implements UserRepositoryInterface
 					$roles[] = $role;
 				}
 			}
-			$users[$row->user_id] = [
+			$authors[$row->author_id] = [
 				'name' => $row->name,
 				'login' => $row->login,
 				'roles' => $roles
 			];
 		}
 
-		return $users;
+		return $authors;
 	}
 
 	/**
 	 *
-	 * @see \App\Model\UserRepositoryInterface::addUser()
+	 * @see \App\Model\AuthorRepositoryInterface::addAuthor()
 	 */
-	public function addUser($name, $password, array $roles)
+	public function addAuthor($name, $password, array $roles)
 	{
 		$data = [
 			'name' => $name,
@@ -76,8 +76,8 @@ class SqliteUserRepository implements UserRepositoryInterface
 		];
 		$this->db->table(self::TABLE)->insert($data);
 
-		$userId = $this->db->getInsertId(self::TABLE);
+		$authorId = $this->db->getInsertId(self::TABLE);
 
-		return $userId;
+		return $authorId;
 	}
 }

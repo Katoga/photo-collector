@@ -1,7 +1,7 @@
 <?php
 namespace App\Presenters;
 
-use App\Model\UserRepositoryInterface;
+use App\Model\AuthorRepositoryInterface;
 use Nette\Application\UI\Form;
 use Nette\Database\UniqueConstraintViolationException;
 use Nette\Utils\ArrayHash;
@@ -11,7 +11,7 @@ use Nette\Utils\ArrayHash;
  * @author Katoga <katoga.cz@hotmail.com>
  * @since 2016-04-16
  */
-class UserPresenter extends BasePresenter
+class AuthorPresenter extends BasePresenter
 {
 
 	const NAME_MIN_LENGTH = 3;
@@ -20,31 +20,31 @@ class UserPresenter extends BasePresenter
 
 	/**
 	 *
-	 * @var UserRepositoryInterface
+	 * @var AuthorRepositoryInterface
 	 */
-	protected $userRepository;
+	protected $authorRepository;
 
 	protected function startup()
 	{
 		parent::startup();
 
-		if (!$this->user->isInRole('admin')) {
+		if (!$this->getUser()->isInRole('admin')) {
 			$this->redirect('Homepage:');
 		}
 	}
 
 	/**
 	 *
-	 * @param UserRepositoryInterface $userRepository
+	 * @param AuthorRepositoryInterface $authorRepository
 	 */
-	public function injectUserRepository(UserRepositoryInterface $userRepository)
+	public function injectAuthorRepository(AuthorRepositoryInterface $authorRepository)
 	{
-		$this->userRepository = $userRepository;
+		$this->authorRepository = $authorRepository;
 	}
 
 	public function renderDefault()
 	{
-		$this->template->users = $this->userRepository->getUsers();
+		$this->template->authors = $this->authorRepository->getAuthors();
 	}
 
 	/**
@@ -52,29 +52,29 @@ class UserPresenter extends BasePresenter
 	 * @param Form $form
 	 * @param ArrayHash $values
 	 */
-	public function newUserFormSuccess(Form $form, ArrayHash $values)
+	public function newAuthorFormSuccess(Form $form, ArrayHash $values)
 	{
 		try {
-			$this->userRepository->addUser($values->name, $values->password, $values->roles);
-			$this->flashMessage('New user created.');
+			$this->authorRepository->addAuthor($values->name, $values->password, $values->roles);
+			$this->flashMessage('New author created.');
 		} catch (UniqueConstraintViolationException $e) {
-			$this->flashMessage(sprintf('User "%s" already exists!', $values->name));
+			$this->flashMessage(sprintf('Author "%s" already exists!', $values->name));
 		} catch (\Exception $e) {
-			$this->flashMessage('Failed to create new user.');
+			$this->flashMessage('Failed to create new author.');
 		}
 
-		$this->redirect('User:');
+		$this->redirect('Author:');
 	}
 
 	/**
 	 *
 	 * @return Form
 	 */
-	protected function createComponentNewUserForm()
+	protected function createComponentNewAuthorForm()
 	{
 		$form = new Form();
 
-		$form->addGroup('New user');
+		$form->addGroup('New author');
 		$form->addText('name', 'Name')
 			->setRequired('Enter name.')
 			->addRule(Form::MIN_LENGTH, sprintf('Name has to be at least %d chars long.', self::NAME_MIN_LENGTH), self::NAME_MIN_LENGTH);
@@ -96,7 +96,7 @@ class UserPresenter extends BasePresenter
 
 		$form->onSuccess[] = [
 			$this,
-			'newUserFormSuccess'
+			'newAuthorFormSuccess'
 		];
 
 		return $form;

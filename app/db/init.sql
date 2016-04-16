@@ -9,19 +9,19 @@ CREATE UNIQUE INDEX "events_name" ON "events" ("name");
 CREATE UNIQUE INDEX "events_url" ON "events" ("url");
 
 
-/* users */
-CREATE TABLE "users" (
-  "user_id" integer NOT NULL PRIMARY KEY AUTOINCREMENT,
+/* authors */
+CREATE TABLE "authors" (
+  "author_id" integer NOT NULL PRIMARY KEY AUTOINCREMENT,
   "name" text COLLATE 'BINARY' NOT NULL,
   "login" text COLLATE 'BINARY' NOT NULL,
   "password" text COLLATE 'BINARY' NOT NULL,
   "roles" text
 );
 
-CREATE UNIQUE INDEX "users_name" ON "users" ("name");
-CREATE UNIQUE INDEX "users_login" ON "users" ("login");
+CREATE UNIQUE INDEX "authors_name" ON "authors" ("name");
+CREATE UNIQUE INDEX "authors_login" ON "authors" ("login");
 
-INSERT INTO "users" (
+INSERT INTO "authors" (
 	"name",
 	"login",
 	"password",

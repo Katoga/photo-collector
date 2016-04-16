@@ -20,9 +20,9 @@ class RouterFactory
 	public static function createRouter()
 	{
 		$router = new RouteList();
-		$router[] = new Route('file/<event>/<user>/<filename>', 'File:default');
+		$router[] = new Route('file/<event>/<author>/<filename>', 'File:default');
 		$router[] = new Route('browse/<event>', 'Browse:event');
-		$router[] = new Route('browse/<event>/<user>', 'Browse:user');
+		$router[] = new Route('browse/<event>/<author>', 'Browse:author');
 		$router[] = new Route('<presenter>/<action>[/<id>]', 'Homepage:default');
 		return $router;
 	}

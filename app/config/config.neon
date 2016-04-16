@@ -22,10 +22,10 @@ session:
 services:
 	router: App\RouterFactory::createRouter
 	fileRepository: App\Model\DiskFileRepository(%dataRootDir%)
-	#userRepository: App\Model\DummyUserRepository
+	#authorRepository: App\Model\DummyAuthorRepository
 	#eventRepository: App\Model\DummyEventRepository
 	db: Nette\Database\Context(@database.default)
-	userRepository: App\Model\SqliteUserRepository(@db)
+	authorRepository: App\Model\SqliteAuthorRepository(@db)
 	eventRepository: App\Model\SqliteEventRepository(@db)
 	authenticator: App\Model\SqliteAuthenticator(@db)
 

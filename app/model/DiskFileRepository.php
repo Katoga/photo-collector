@@ -33,13 +33,13 @@ class DiskFileRepository implements FileRepositoryInterface
 	 * {@inheritDoc}
 	 * @see \App\Model\FileRepositoryInterface::upload()
 	 */
-	public function upload($user, $event, array $fileUploads)
+	public function upload($author, $event, array $fileUploads)
 	{
 		foreach ($fileUploads as $fileUpload) {
 			/* @var $fileUpload \Nette\Http\FileUpload */
 			switch ($fileUpload->contentType) {
 				case 'image/jpeg':
-					$this->save($user, $event, $fileUpload);
+					$this->save($author, $event, $fileUpload);
 					break;
 				case 'application/zip':
 					// TODO
@@ -55,17 +55,17 @@ class DiskFileRepository implements FileRepositoryInterface
 	 * {@inheritDoc}
 	 * @see \App\Model\FileRepositoryInterface::get()
 	 */
-	public function get($event = '', $user = '')
+	public function get($event = '', $author = '')
 	{
 		$files = [];
-		$directory = sprintf('%s/%s/%s', $this->dataRootDir, $event, $user);
+		$directory = sprintf('%s/%s/%s', $this->dataRootDir, $event, $author);
 
 		try {
 			foreach (Finder::findFiles('*.jpeg', '*.jpg')->in($directory) as $path => $file) {
 				$filePath = explode('/', trim(str_replace($this->dataRootDir, '', $path), '/'));
 				$pathParts = [
 					'event',
-					'user',
+					'author',
 					'filename'
 				];
 				$filePath = array_combine($pathParts, $filePath);
@@ -80,38 +80,38 @@ class DiskFileRepository implements FileRepositoryInterface
 
 	/**
 	 *
-	 * @param string $user
+	 * @param string $author
 	 * @param string $event
 	 * @param FileUpload $fileUpload
 	 */
-	protected function save($user, $event, FileUpload $fileUpload)
+	protected function save($author, $event, FileUpload $fileUpload)
 	{
-		$fileUpload->move($this->getDestinationFilename($user, $event, $fileUpload->name));
+		$fileUpload->move($this->getDestinationFilename($author, $event, $fileUpload->name));
 	}
 
 	/**
 	 *
-	 * @param string $user
+	 * @param string $author
 	 * @param string $event
 	 * @param string $name
 	 * @return string
 	 */
-	protected function getDestinationFilename($user, $event, $name)
+	protected function getDestinationFilename($author, $event, $name)
 	{
 		$pathInfo = pathinfo($name);
 
 		$filename = sprintf('%s.%s', Strings::webalize($pathInfo['filename']), $pathInfo['extension']);
-		return sprintf('%s/%s', $this->getDestinationDirectory($user, $event), $filename);
+		return sprintf('%s/%s', $this->getDestinationDirectory($author, $event), $filename);
 	}
 
 	/**
 	 *
-	 * @param string $user
+	 * @param string $author
 	 * @param string $event
 	 * @return string
 	 */
-	protected function getDestinationDirectory($user, $event)
+	protected function getDestinationDirectory($author, $event)
 	{
-		return sprintf('%s/%s/%s', $this->dataRootDir, Strings::webalize($event), Strings::webalize($user));
+		return sprintf('%s/%s/%s', $this->dataRootDir, Strings::webalize($event), Strings::webalize($author));
 	}
 }

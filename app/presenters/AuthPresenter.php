@@ -16,14 +16,14 @@ class AuthPresenter extends Presenter
 
 	public function renderDefault()
 	{
-		if ($this->user->isLoggedIn()) {
+		if ($this->getUser()->isLoggedIn()) {
 			$this->redirect('Homepage:');
 		}
 	}
 
 	public function actionLogout()
 	{
-		$this->user->logout();
+		$this->getUser()->logout();
 		$this->redirect('Auth:');
 	}
 
@@ -57,7 +57,7 @@ class AuthPresenter extends Presenter
 	public function loginFormSuccess(Form $form, ArrayHash $values)
 	{
 		try {
-			$this->user->login($values->login, $values->password);
+			$this->getUser()->login($values->login, $values->password);
 		} catch (AuthenticationException $e) {
 			$this->flashMessage('Invalid login/password.');
 			$this->redirect('Auth:');
