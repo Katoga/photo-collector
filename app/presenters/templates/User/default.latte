@@ -1,9 +1,9 @@
 {block content}
 {control newUserForm}
 <ul n:if="$users">
-<li n:foreach="$users as $user">
-{$user}
+<li n:foreach="$users as $userId => $user">
 {dump $user}
+{$userId}: {$user['name']} <span n:if="$user['roles']">({implode(', ', $user['roles'])})</span>
 </li>
 </ul>
 {/block}

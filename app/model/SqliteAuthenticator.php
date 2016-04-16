@@ -55,6 +55,6 @@ class SqliteAuthenticator extends Object implements IAuthenticator
 			'name' => $row->name
 		];
 
-		return new Identity($row->login, null, $data);
+		return new Identity($row->login, explode('|', $row->roles), $data);
 	}
 }

@@ -20,6 +20,15 @@ class EventPresenter extends BasePresenter
 	 */
 	protected $eventRepository;
 
+	protected function startup()
+	{
+		parent::startup();
+
+		if (!$this->user->isInRole('admin')) {
+			$this->redirect('Homepage:');
+		}
+	}
+
 	/**
 	 *
 	 * @param EventRepositoryInterface $eventRepository

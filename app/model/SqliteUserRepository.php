@@ -42,9 +42,21 @@ class SqliteUserRepository implements UserRepositoryInterface
 			->select('user_id')
 			->select('name')
 			->select('login')
+			->select('roles')
 			->order('name');
 		foreach ($res as $row) {
-			$users[$row->login] = $row->name;
+			$roles = [];
+			foreach (explode('|', $row->roles) as $role) {
+				$role = trim($role);
+				if (!empty($role)) {
+					$roles[] = $role;
+				}
+			}
+			$users[$row->user_id] = [
+				'name' => $row->name,
+				'login' => $row->login,
+				'roles' => $roles
+			];
 		}
 
 		return $users;
@@ -54,12 +66,13 @@ class SqliteUserRepository implements UserRepositoryInterface
 	 *
 	 * @see \App\Model\UserRepositoryInterface::addUser()
 	 */
-	public function addUser($name, $password)
+	public function addUser($name, $password, array $roles)
 	{
 		$data = [
 			'name' => $name,
 			'login' => Strings::webalize($name),
-			'password' => Passwords::hash($password)
+			'password' => Passwords::hash($password),
+			'roles' => implode('|', $roles)
 		];
 		$this->db->table(self::TABLE)->insert($data);
 

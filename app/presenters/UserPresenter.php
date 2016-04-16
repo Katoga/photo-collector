@@ -24,6 +24,15 @@ class UserPresenter extends BasePresenter
 	 */
 	protected $userRepository;
 
+	protected function startup()
+	{
+		parent::startup();
+
+		if (!$this->user->isInRole('admin')) {
+			$this->redirect('Homepage:');
+		}
+	}
+
 	/**
 	 *
 	 * @param UserRepositoryInterface $userRepository
@@ -46,7 +55,7 @@ class UserPresenter extends BasePresenter
 	public function newUserFormSuccess(Form $form, ArrayHash $values)
 	{
 		try {
-			$this->userRepository->addUser($values->name, $values->password);
+			$this->userRepository->addUser($values->name, $values->password, $values->roles);
 			$this->flashMessage('New user created.');
 		} catch (UniqueConstraintViolationException $e) {
 			$this->flashMessage(sprintf('User "%s" already exists!', $values->name));
@@ -75,6 +84,11 @@ class UserPresenter extends BasePresenter
 		$form->addPassword('password2', 'Password verification')
 			->setRequired('Enter password verification.')
 			->addRule(Form::EQUAL, 'Passwords does not match!', $form['password']);
+
+		$roles = [
+			'admin' => 'Admin'
+		];
+		$form->addCheckboxList('roles', 'Roles', $roles);
 
 		$form->setMethod(Form::POST);
 

@@ -1,9 +1,9 @@
 <nav>
 	<ul>
-		<li>
+		<li n:if="$user->isInRole(admin)">
 			<a href="{plink Event:}">Events</a>
 		</li>
-		<li>
+		<li n:if="$user->isInRole(admin)">
 			<a href="{plink User:}">Users</a>
 		</li>
 		<li>

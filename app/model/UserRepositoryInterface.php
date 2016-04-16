@@ -19,7 +19,8 @@ interface UserRepositoryInterface
 	 *
 	 * @param string $name
 	 * @param string $password
+	 * @param array $roles
 	 * @return int ID of new user
 	 */
-	public function addUser($name, $password);
+	public function addUser($name, $password, array $roles);
 }
