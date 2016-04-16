@@ -3,11 +3,11 @@ namespace App\Presenters;
 
 use App\Model\EventRepositoryInterface;
 use App\Model\File;
+use App\Model\FileRepositoryInterface;
 use App\Model\UserRepositoryInterface;
 use Nette\Application\UI\Form;
 use Nette\Application\UI\Presenter;
 use Nette\Utils\ArrayHash;
-use App\Model\FileRepositoryInterface;
 
 /**
  *
