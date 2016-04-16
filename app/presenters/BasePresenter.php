@@ -14,7 +14,7 @@ class BasePresenter extends Presenter
 
 	/**
 	 *
-	 * @return UserMenu
+	 * @return MainMenu
 	 */
 	protected function createComponentMainMenu()
 	{

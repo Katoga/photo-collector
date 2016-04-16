@@ -6,9 +6,9 @@ use Nette\Utils\Strings;
 /**
  *
  * @author Katoga <katoga.cz@hotmail.com>
- * @since 2016-04-15
+ * @since 2016-04-16
  */
-class SqliteEventRepository implements EventRepositoryInterface
+class SqliteUserRepository implements UserRepositoryInterface
 {
 
 	const ERROR_HANDLER = [
@@ -35,34 +35,34 @@ class SqliteEventRepository implements EventRepositoryInterface
 	 *
 	 * {@inheritDoc}
 	 *
-	 * @see \App\Model\EventRepositoryInterface::getEvents()
+	 * @see \App\Model\UserRepositoryInterface::getUsers()
 	 */
-	public function getEvents()
+	public function getUsers()
 	{
-		$events = [];
+		$users = [];
 
 		$query = "
 			SELECT name,
 				url
-			FROM events
+			FROM users
 			ORDER BY name ASC
 		";
 		$res = $this->db->query($query);
 		while (($row = $res->fetchArray(SQLITE3_ASSOC)) !== false) {
-			$events[$row['url']] = $row['name'];
+			$users[$row['url']] = $row['name'];
 		}
 
-		return $events;
+		return $users;
 	}
 
 	/**
 	 *
-	 * @see \App\Model\EventRepositoryInterface::addEvent()
+	 * @see \App\Model\UserRepositoryInterface::addUser()
 	 */
-	public function addEvent($name)
+	public function addUser($name)
 	{
 		$query = "
-			INSERT INTO events (
+			INSERT INTO users (
 				name,
 				url
 			)
@@ -79,14 +79,14 @@ class SqliteEventRepository implements EventRepositoryInterface
 			$statement->bindValue(':name', $name, SQLITE3_TEXT);
 			$statement->bindValue(':url', Strings::webalize($name), SQLITE3_TEXT);
 			$statement->execute();
-			$eventId = $this->db->lastInsertRowID();
+			$userId = $this->db->lastInsertRowID();
 		} catch (\RuntimeException $e) {
 			throw $e;
 		} finally {
 			restore_error_handler();
 		}
 
-		return $eventId;
+		return $userId;
 	}
 
 	/**

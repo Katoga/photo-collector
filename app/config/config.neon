@@ -22,6 +22,7 @@ session:
 services:
 	router: App\RouterFactory::createRouter
 	fileRepository: App\Model\DiskFileRepository(%dataRootDir%)
-	userRepository: App\Model\DummyUserRepository
-	eventRepository: App\Model\SqliteEventRepository(%dbFile%)
+	#userRepository: App\Model\DummyUserRepository
 	#eventRepository: App\Model\DummyEventRepository
+	userRepository: App\Model\SqliteUserRepository(%dbFile%)
+	eventRepository: App\Model\SqliteEventRepository(%dbFile%)

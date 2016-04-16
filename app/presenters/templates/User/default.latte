@@ -1,0 +1,9 @@
+{block content}
+{control newUserForm}
+<ul n:if="$users">
+<li n:foreach="$users as $user">
+{$user}
+{dump $user}
+</li>
+</ul>
+{/block}
