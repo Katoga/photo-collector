@@ -3,6 +3,7 @@ namespace App\Presenters;
 
 use App\Model\EventRepositoryInterface;
 use Nette\Application\UI\Form;
+use Nette\Database\UniqueConstraintViolationException;
 use Nette\Utils\ArrayHash;
 
 /**
@@ -43,13 +44,19 @@ class EventPresenter extends BasePresenter
 		try {
 			$this->eventRepository->addEvent($values->name);
 			$this->flashMessage('New event created.');
-		} catch (\RuntimeException $e) {
+		} catch (UniqueConstraintViolationException $e) {
+			$this->flashMessage(sprintf('Event "%s" already exists!', $values->name));
+		} catch (\Exception $e) {
 			$this->flashMessage('Failed to create new event.');
 		}
 
 		$this->redirect('Event:');
 	}
 
+	/**
+	 *
+	 * @return Form
+	 */
 	protected function createComponentNewEventForm()
 	{
 		$form = new Form();

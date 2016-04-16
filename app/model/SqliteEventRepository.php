@@ -2,38 +2,34 @@
 namespace App\Model;
 
 use Nette\Utils\Strings;
+use Nette\Database\Context;
 
 /**
  *
  * @author Katoga <katoga.cz@hotmail.com>
- * @since 2016-04-15
+ * @since 2016-04-16
  */
 class SqliteEventRepository implements EventRepositoryInterface
 {
 
-	const ERROR_HANDLER = [
-		__CLASS__,
-		'handleErrors'
-	];
+	const TABLE = 'events';
 
 	/**
 	 *
-	 * @var \SQLite3
+	 * @var Context
 	 */
 	protected $db;
 
 	/**
 	 *
-	 * @param string $dbFile
+	 * @param Context $db
 	 */
-	public function __construct($dbFile)
+	public function __construct(Context $db)
 	{
-		$this->db = new \SQLite3($dbFile, SQLITE3_OPEN_READWRITE);
+		$this->db = $db;
 	}
 
 	/**
-	 *
-	 * {@inheritDoc}
 	 *
 	 * @see \App\Model\EventRepositoryInterface::getEvents()
 	 */
@@ -41,15 +37,12 @@ class SqliteEventRepository implements EventRepositoryInterface
 	{
 		$events = [];
 
-		$query = "
-			SELECT name,
-				url
-			FROM events
-			ORDER BY name ASC
-		";
-		$res = $this->db->query($query);
-		while (($row = $res->fetchArray(SQLITE3_ASSOC)) !== false) {
-			$events[$row['url']] = $row['name'];
+		$res = $this->db->table('events')
+			->select('name')
+			->select('url')
+			->order('name');
+		foreach ($res as $row) {
+			$events[$row->url] = $row->name;
 		}
 
 		return $events;
@@ -61,42 +54,14 @@ class SqliteEventRepository implements EventRepositoryInterface
 	 */
 	public function addEvent($name)
 	{
-		$query = "
-			INSERT INTO events (
-				name,
-				url
-			)
-			VALUES (
-				:name,
-				:url
-			)
-		";
+		$data = [
+			'name' => $name,
+			'url' => Strings::webalize($name)
+		];
+		$this->db->table(self::TABLE)->insert($data);
 
-		try {
-			set_error_handler(self::ERROR_HANDLER);
-
-			$statement = $this->db->prepare($query);
-			$statement->bindValue(':name', $name, SQLITE3_TEXT);
-			$statement->bindValue(':url', Strings::webalize($name), SQLITE3_TEXT);
-			$statement->execute();
-			$eventId = $this->db->lastInsertRowID();
-		} catch (\RuntimeException $e) {
-			throw $e;
-		} finally {
-			restore_error_handler();
-		}
+		$eventId = $this->db->getInsertId(self::TABLE);
 
 		return $eventId;
-	}
-
-	/**
-	 *
-	 * @param int $errno
-	 * @param string $errstr
-	 * @throws \RuntimeException
-	 */
-	static public function handleErrors($errno, $errstr)
-	{
-		throw new \RuntimeException($errstr, $errno);
 	}
 }

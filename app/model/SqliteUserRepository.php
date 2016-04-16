@@ -2,6 +2,7 @@
 namespace App\Model;
 
 use Nette\Utils\Strings;
+use Nette\Database\Context;
 
 /**
  *
@@ -11,29 +12,24 @@ use Nette\Utils\Strings;
 class SqliteUserRepository implements UserRepositoryInterface
 {
 
-	const ERROR_HANDLER = [
-		__CLASS__,
-		'handleErrors'
-	];
+	const TABLE = 'users';
 
 	/**
 	 *
-	 * @var \SQLite3
+	 * @var Context
 	 */
 	protected $db;
 
 	/**
 	 *
-	 * @param string $dbFile
+	 * @param Context $db
 	 */
-	public function __construct($dbFile)
+	public function __construct(Context $db)
 	{
-		$this->db = new \SQLite3($dbFile, SQLITE3_OPEN_READWRITE);
+		$this->db = $db;
 	}
 
 	/**
-	 *
-	 * {@inheritDoc}
 	 *
 	 * @see \App\Model\UserRepositoryInterface::getUsers()
 	 */
@@ -41,15 +37,12 @@ class SqliteUserRepository implements UserRepositoryInterface
 	{
 		$users = [];
 
-		$query = "
-			SELECT name,
-				url
-			FROM users
-			ORDER BY name ASC
-		";
-		$res = $this->db->query($query);
-		while (($row = $res->fetchArray(SQLITE3_ASSOC)) !== false) {
-			$users[$row['url']] = $row['name'];
+		$res = $this->db->table('users')
+			->select('name')
+			->select('url')
+			->order('name');
+		foreach ($res as $row) {
+			$users[$row->url] = $row->name;
 		}
 
 		return $users;
@@ -61,42 +54,14 @@ class SqliteUserRepository implements UserRepositoryInterface
 	 */
 	public function addUser($name)
 	{
-		$query = "
-			INSERT INTO users (
-				name,
-				url
-			)
-			VALUES (
-				:name,
-				:url
-			)
-		";
+		$data = [
+			'name' => $name,
+			'url' => Strings::webalize($name)
+		];
+		$this->db->table(self::TABLE)->insert($data);
 
-		try {
-			set_error_handler(self::ERROR_HANDLER);
-
-			$statement = $this->db->prepare($query);
-			$statement->bindValue(':name', $name, SQLITE3_TEXT);
-			$statement->bindValue(':url', Strings::webalize($name), SQLITE3_TEXT);
-			$statement->execute();
-			$userId = $this->db->lastInsertRowID();
-		} catch (\RuntimeException $e) {
-			throw $e;
-		} finally {
-			restore_error_handler();
-		}
+		$userId = $this->db->getInsertId(self::TABLE);
 
 		return $userId;
-	}
-
-	/**
-	 *
-	 * @param int $errno
-	 * @param string $errstr
-	 * @throws \RuntimeException
-	 */
-	static public function handleErrors($errno, $errstr)
-	{
-		throw new \RuntimeException($errstr, $errno);
 	}
 }

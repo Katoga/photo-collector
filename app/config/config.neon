@@ -24,5 +24,10 @@ services:
 	fileRepository: App\Model\DiskFileRepository(%dataRootDir%)
 	#userRepository: App\Model\DummyUserRepository
 	#eventRepository: App\Model\DummyEventRepository
-	userRepository: App\Model\SqliteUserRepository(%dbFile%)
-	eventRepository: App\Model\SqliteEventRepository(%dbFile%)
+	db: Nette\Database\Context(@database.default)
+	userRepository: App\Model\SqliteUserRepository(@db)
+	eventRepository: App\Model\SqliteEventRepository(@db)
+
+database:
+	default:
+		dsn: 'sqlite:%dbFile%'
