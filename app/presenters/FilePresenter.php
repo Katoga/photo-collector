@@ -4,14 +4,13 @@ namespace App\Presenters;
 use App\Model\EventRepositoryInterface;
 use App\Model\FileRepositoryInterface;
 use App\Model\UserRepositoryInterface;
-use Nette\Application\UI\Presenter;
 
 /**
  *
  * @author Katoga <katoga.cz@hotmail.com>
  * @since 2016-04-11
  */
-class FilePresenter extends Presenter
+class FilePresenter extends BasePresenter
 {
 
 	/**
@@ -56,7 +55,7 @@ class FilePresenter extends Presenter
 	 */
 	public function injectFileRepository(FileRepositoryInterface $fileRepository)
 	{
-		$this->fileRepository= $fileRepository;
+		$this->fileRepository = $fileRepository;
 	}
 
 	/**

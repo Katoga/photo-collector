@@ -8,6 +8,7 @@
 </head>
 
 <body>
+	{control mainMenu}
 	<div n:foreach="$flashes as $flash" n:class="flash, $flash->type">{$flash->message}</div>
 
 	{include content}

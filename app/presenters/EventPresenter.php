@@ -2,7 +2,6 @@
 namespace App\Presenters;
 
 use App\Model\EventRepositoryInterface;
-use Nette\Application\UI\Presenter;
 use Nette\Application\UI\Form;
 use Nette\Utils\ArrayHash;
 
@@ -11,7 +10,7 @@ use Nette\Utils\ArrayHash;
  * @author Katoga <katoga.cz@hotmail.com>
  * @since 2016-04-10
  */
-class EventPresenter extends Presenter
+class EventPresenter extends BasePresenter
 {
 
 	/**

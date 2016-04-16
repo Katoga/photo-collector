@@ -6,14 +6,13 @@ use App\Components\UserMenu;
 use App\Model\EventRepositoryInterface;
 use App\Model\FileRepositoryInterface;
 use App\Model\UserRepositoryInterface;
-use Nette\Application\UI\Presenter;
 
 /**
  *
  * @author Katoga <katoga.cz@hotmail.com>
  * @since 2016-04-10
  */
-class BrowsePresenter extends Presenter
+class BrowsePresenter extends BasePresenter
 {
 
 	/**

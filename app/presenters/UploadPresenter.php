@@ -6,7 +6,6 @@ use App\Model\File;
 use App\Model\FileRepositoryInterface;
 use App\Model\UserRepositoryInterface;
 use Nette\Application\UI\Form;
-use Nette\Application\UI\Presenter;
 use Nette\Utils\ArrayHash;
 
 /**
@@ -14,7 +13,7 @@ use Nette\Utils\ArrayHash;
  * @author Katoga <katoga.cz@hotmail.com>
  * @since 2016-04-10
  */
-class UploadPresenter extends Presenter
+class UploadPresenter extends BasePresenter
 {
 
 	const ALLOWED_MIME_TYPES = [
