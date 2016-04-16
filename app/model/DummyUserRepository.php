@@ -11,7 +11,6 @@ class DummyUserRepository implements UserRepositoryInterface
 
 	/**
 	 *
-	 * {@inheritDoc}
 	 * @see \App\Model\UserRepositoryInterface::getUsers()
 	 */
 	public function getUsers()
@@ -22,5 +21,14 @@ class DummyUserRepository implements UserRepositoryInterface
 		];
 
 		return $users;
+	}
+
+	/**
+	 *
+	 * @see \App\Model\UserRepositoryInterface::addUser()
+	 */
+	public function addUser($name, $password, array $roles)
+	{
+		return 0;
 	}
 }

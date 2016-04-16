@@ -13,8 +13,6 @@ class DummyEventRepository implements EventRepositoryInterface
 
 	/**
 	 *
-	 * {@inheritDoc}
-	 *
 	 * @see \App\Model\EventRepositoryInterface::getEvents()
 	 */
 	public function getEvents()
@@ -25,5 +23,14 @@ class DummyEventRepository implements EventRepositoryInterface
 		];
 
 		return $events;
+	}
+
+	/**
+	 *
+	 * @see \App\Model\EventRepositoryInterface::addEvent()
+	 */
+	public function addEvent($name)
+	{
+		return 0;
 	}
 }
