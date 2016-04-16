@@ -1,7 +1,7 @@
 <nav>
 	<ul n:if="$items">
-		<li n:foreach="$items as $url => $text">
-			<a href="{plink Browse:$event}/{$url}">{$text}</a>
+		<li n:foreach="$items as $item">
+			<a href="{plink Browse:$event}/{$item['login']}">{$item['name']}</a>
 		</li>
 	</ul>
 </nav>
