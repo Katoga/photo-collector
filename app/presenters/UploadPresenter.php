@@ -70,8 +70,7 @@ class UploadPresenter extends BasePresenter
 	{
 		$form = new Form();
 
-		$form->addSelect('user', 'User', $this->getUserOptions())
-			->setRequired();
+		$form->addHidden('user', $this->getUser()->getId());
 		$form->addSelect('event', 'Event', $this->getEventOptions())
 			->setRequired();
 		$form->addMultiUpload('photos', 'File')
