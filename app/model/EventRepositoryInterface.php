@@ -13,4 +13,11 @@ interface EventRepositoryInterface
 	 * @return array
 	 */
 	public function getEvents();
+
+	/**
+	 *
+	 * @param string $name
+	 * @return int ID of new event
+	 */
+	public function addEvent($name);
 }

@@ -1,0 +1,9 @@
+{block content}
+{control newEventForm}
+<ul n:if="$events">
+<li n:foreach="$events as $event">
+{$event}
+{dump $event}
+</li>
+</ul>
+{/block}

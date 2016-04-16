@@ -3,6 +3,7 @@
 
 parameters:
 	dataRootDir: %appDir%/../data
+	dbFile: %appDir%/db/photo_collector.sqlite3
 
 php:
 	date.timezone: Europe/Prague
@@ -22,5 +23,5 @@ services:
 	router: App\RouterFactory::createRouter
 	fileRepository: App\Model\DiskFileRepository(%dataRootDir%)
 	userRepository: App\Model\DummyUserRepository
-	eventRepository: App\Model\DummyEventRepository
-	
+	eventRepository: App\Model\SqliteEventRepository(%dbFile%)
+	#eventRepository: App\Model\DummyEventRepository
