@@ -1,5 +1,7 @@
 <nav>
-{foreach $items as $url => $text}
-<a href="{plink Browse:event $url}">{$text}</a>
-{/foreach}
+	<ul n:if="$items">
+		<li n:foreach="$items as $url => $text">
+			<a href="{plink Browse:event $url}">{$text}</a>
+		</li>
+	</ul>
 </nav>
