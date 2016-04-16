@@ -111,6 +111,11 @@ class UploadPresenter extends BasePresenter
 	 */
 	protected function getEventOptions()
 	{
-		return $this->eventRepository->getEvents();
+		$events = [
+			'' => ''
+		];
+		$events += $this->eventRepository->getEvents();
+
+		return $events;
 	}
 }
