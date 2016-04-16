@@ -13,9 +13,10 @@ CREATE UNIQUE INDEX "events_url" ON "events" ("url");
 CREATE TABLE "users" (
   "user_id" integer NOT NULL PRIMARY KEY AUTOINCREMENT,
   "name" text COLLATE 'BINARY' NOT NULL,
-  "url" text COLLATE 'BINARY' NOT NULL
+  "login" text COLLATE 'BINARY' NOT NULL,
+  "password" text COLLATE 'BINARY' NOT NULL
 );
 
 CREATE UNIQUE INDEX "users_name" ON "users" ("name");
-CREATE UNIQUE INDEX "users_url" ON "users" ("url");
+CREATE UNIQUE INDEX "users_login" ON "users" ("login");
 

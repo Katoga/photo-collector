@@ -3,6 +3,7 @@ namespace App\Model;
 
 use Nette\Utils\Strings;
 use Nette\Database\Context;
+use Nette\Security\Passwords;
 
 /**
  *
@@ -38,11 +39,12 @@ class SqliteUserRepository implements UserRepositoryInterface
 		$users = [];
 
 		$res = $this->db->table('users')
+			->select('user_id')
 			->select('name')
-			->select('url')
+			->select('login')
 			->order('name');
 		foreach ($res as $row) {
-			$users[$row->url] = $row->name;
+			$users[$row->login] = $row->name;
 		}
 
 		return $users;
@@ -52,11 +54,12 @@ class SqliteUserRepository implements UserRepositoryInterface
 	 *
 	 * @see \App\Model\UserRepositoryInterface::addUser()
 	 */
-	public function addUser($name)
+	public function addUser($name, $password)
 	{
 		$data = [
 			'name' => $name,
-			'url' => Strings::webalize($name)
+			'login' => Strings::webalize($name),
+			'password' => Passwords::hash($password)
 		];
 		$this->db->table(self::TABLE)->insert($data);
 

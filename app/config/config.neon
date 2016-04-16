@@ -27,6 +27,7 @@ services:
 	db: Nette\Database\Context(@database.default)
 	userRepository: App\Model\SqliteUserRepository(@db)
 	eventRepository: App\Model\SqliteEventRepository(@db)
+	authenticator: App\Model\SqliteAuthenticator(@db)
 
 database:
 	default:

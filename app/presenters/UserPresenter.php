@@ -14,6 +14,10 @@ use Nette\Utils\ArrayHash;
 class UserPresenter extends BasePresenter
 {
 
+	const NAME_MIN_LENGTH = 3;
+
+	const PASSWORD_MIN_LENGTH = 5;
+
 	/**
 	 *
 	 * @var UserRepositoryInterface
@@ -42,7 +46,7 @@ class UserPresenter extends BasePresenter
 	public function newUserFormSuccess(Form $form, ArrayHash $values)
 	{
 		try {
-			$this->userRepository->addUser($values->name);
+			$this->userRepository->addUser($values->name, $values->password);
 			$this->flashMessage('New user created.');
 		} catch (UniqueConstraintViolationException $e) {
 			$this->flashMessage(sprintf('User "%s" already exists!', $values->name));
@@ -61,7 +65,16 @@ class UserPresenter extends BasePresenter
 	{
 		$form = new Form();
 
-		$form->addText('name', 'Name');
+		$form->addGroup('New user');
+		$form->addText('name', 'Name')
+			->setRequired('Enter name.')
+			->addRule(Form::MIN_LENGTH, sprintf('Name has to be at least %d chars long.', self::NAME_MIN_LENGTH), self::NAME_MIN_LENGTH);
+		$form->addPassword('password', 'Password')
+			->setRequired('Enter password.')
+			->addRule(Form::MIN_LENGTH, sprintf('Password has to be at least %d chars long.', self::PASSWORD_MIN_LENGTH), self::PASSWORD_MIN_LENGTH);
+		$form->addPassword('password2', 'Password verification')
+			->setRequired('Enter password verification.')
+			->addRule(Form::EQUAL, 'Passwords does not match!', $form['password']);
 
 		$form->setMethod(Form::POST);
 

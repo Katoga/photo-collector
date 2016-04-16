@@ -8,7 +8,10 @@
 </head>
 
 <body>
-	{control mainMenu}
+	{if $user->loggedIn}
+		{control mainMenu}
+	{/if}
+
 	<div n:foreach="$flashes as $flash" n:class="flash, $flash->type">{$flash->message}</div>
 
 	{include content}
