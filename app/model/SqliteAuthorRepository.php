@@ -80,4 +80,24 @@ class SqliteAuthorRepository implements AuthorRepositoryInterface
 
 		return $authorId;
 	}
+
+	/**
+	 *
+	 * @see \App\Model\AuthorRepositoryInterface::changePassword()
+	 */
+	public function changePassword($login, $password)
+	{
+		$data = [
+			'password' => Passwords::hash($password)
+		];
+
+		$condition = [
+			'login' => $login
+		];
+		$rowsUpdated = $this->db->table(self::TABLE)->where($condition)->update($data);
+
+		if ($rowsUpdated != 1) {
+			throw new \RuntimeException('updated: ' . $rowsUpdated);
+		}
+	}
 }

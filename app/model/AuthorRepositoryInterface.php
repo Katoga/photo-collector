@@ -23,4 +23,11 @@ interface AuthorRepositoryInterface
 	 * @return int ID of new author
 	 */
 	public function addAuthor($name, $password, array $roles);
+
+	/**
+	 *
+	 * @param string $login
+	 * @param string $password
+	 */
+	public function changePassword($login, $password);
 }
