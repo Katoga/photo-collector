@@ -30,7 +30,6 @@ class DiskFileRepository implements FileRepositoryInterface
 
 	/**
 	 *
-	 * {@inheritDoc}
 	 * @see \App\Model\FileRepositoryInterface::upload()
 	 */
 	public function upload($author, $event, array $fileUploads)
@@ -42,7 +41,27 @@ class DiskFileRepository implements FileRepositoryInterface
 					$this->save($author, $event, $fileUpload);
 					break;
 				case 'application/zip':
-					// TODO
+					$zip = new \ZipArchive();
+					$opened = $zip->open($fileUpload->temporaryFile, \ZipArchive::CHECKCONS);
+					if ($opened !== true) {
+						// TODO
+						throw new \RuntimeException('zip failed ' . $opened);
+					}
+
+					for ($i = 0; $i < $zip->numFiles; $i++) {
+						$name = $zip->getNameIndex($i);
+						if (Strings::endsWith($name, '.jpg') || Strings::endsWith($name, '.jpeg')) {
+							$fileInZip = sprintf('zip://%s#%s', $fileUpload->temporaryFile, $name);
+
+							// taken from \Nette\Http\FileUpload::getSanitizedName()
+							$sanitizedName = trim(Strings::webalize($name, '.', false), '.-');
+							$destination = sprintf('%s/%s/%s/%s', $this->dataRootDir, $event, $author, $sanitizedName);
+
+							copy($fileInZip, $destination);
+						}
+					}
+
+					$zip->close();
 					break;
 				default:
 					throw new \InvalidArgumentException(sprintf('Unsupported type of file "%s": %s"!', $fileUpload->name, $fileUpload->contentType));
@@ -52,7 +71,6 @@ class DiskFileRepository implements FileRepositoryInterface
 
 	/**
 	 *
-	 * {@inheritDoc}
 	 * @see \App\Model\FileRepositoryInterface::get()
 	 */
 	public function get($event = '', $author = '')
@@ -86,7 +104,7 @@ class DiskFileRepository implements FileRepositoryInterface
 	 */
 	protected function save($author, $event, FileUpload $fileUpload)
 	{
-		$fileUpload->move($this->getDestinationFilename($author, $event, $fileUpload->name));
+		$fileUpload->move($this->getDestinationFilename($author, $event, $fileUpload->getSanitizedName()));
 	}
 
 	/**
