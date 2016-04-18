@@ -71,9 +71,9 @@ class DiskFileRepository implements FileRepositoryInterface
 
 	/**
 	 *
-	 * @see \App\Model\FileRepositoryInterface::get()
+	 * @see \App\Model\FileRepositoryInterface::getList()
 	 */
-	public function get($event = '', $author = '')
+	public function getList($event = '', $author = '')
 	{
 		$files = [];
 		$directory = sprintf('%s/%s/%s', $this->dataRootDir, $event, $author);
@@ -94,6 +94,25 @@ class DiskFileRepository implements FileRepositoryInterface
 		}
 
 		return $files;
+	}
+
+	/**
+	 *
+	 * @see \App\Model\FileRepositoryInterface::getFile()
+	 */
+	public function getFileInfo($event, $author, $filename)
+	{
+		$fullPath = sprintf('%s/%s/%s/%s', $this->dataRootDir, $event, $author, $filename);
+
+		$finfo = finfo_open(FILEINFO_MIME_TYPE);
+		$data = [
+			'fullPath' => $fullPath,
+			'mimeType' => finfo_file($finfo, $fullPath)
+		];
+
+		finfo_close($finfo);
+
+		return $data;
 	}
 
 	/**

@@ -79,7 +79,7 @@ class BrowsePresenter extends BasePresenter
 		$this->template->event = $event;
 		$this->template->author = $author;
 
-		$this->template->files = $this->fileRepository->get($event, $author);
+		$this->template->files = $this->fileRepository->getList($event, $author);
 	}
 
 	/**

@@ -24,5 +24,14 @@ interface FileRepositoryInterface
 	 * @param string $author
 	 * @return array
 	 */
-	public function get($event = '', $author = '');
+	public function getList($event = '', $author = '');
+
+	/**
+	 *
+	 * @param string $event
+	 * @param string $author
+	 * @param string $filename
+	 * @return array
+	 */
+	public function getFileInfo($event, $author, $filename);
 }
