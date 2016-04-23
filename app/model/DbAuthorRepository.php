@@ -10,7 +10,7 @@ use Nette\Security\Passwords;
  * @author Katoga <katoga.cz@hotmail.com>
  * @since 2016-04-16
  */
-class SqliteAuthorRepository implements AuthorRepositoryInterface
+class DbAuthorRepository implements AuthorRepositoryInterface
 {
 
 	const TABLE = 'authors';

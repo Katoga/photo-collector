@@ -9,7 +9,7 @@ use Nette\Database\Context;
  * @author Katoga <katoga.cz@hotmail.com>
  * @since 2016-04-16
  */
-class SqliteEventRepository implements EventRepositoryInterface
+class DbEventRepository implements EventRepositoryInterface
 {
 
 	const TABLE = 'events';

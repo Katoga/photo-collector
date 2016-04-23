@@ -25,9 +25,9 @@ services:
 	#authorRepository: App\Model\DummyAuthorRepository
 	#eventRepository: App\Model\DummyEventRepository
 	db: Nette\Database\Context(@database.default)
-	authorRepository: App\Model\SqliteAuthorRepository(@db)
-	eventRepository: App\Model\SqliteEventRepository(@db)
-	authenticator: App\Model\SqliteAuthenticator(@db)
+	authorRepository: App\Model\DbAuthorRepository(@db)
+	eventRepository: App\Model\DbEventRepository(@db)
+	authenticator: App\Model\DbAuthenticator(@db)
 
 database:
 	default:

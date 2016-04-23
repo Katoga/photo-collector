@@ -13,7 +13,7 @@ use Nette\Security\Passwords;
  * @author Katoga <katoga.cz@hotmail.com>
  * @since 2016-04-16
  */
-class SqliteAuthenticator extends Object implements IAuthenticator
+class DbAuthenticator extends Object implements IAuthenticator
 {
 
 	/**
@@ -39,7 +39,7 @@ class SqliteAuthenticator extends Object implements IAuthenticator
 	{
 		list ($login, $password) = $credentials;
 
-		$row = $this->db->table(SqliteAuthorRepository::TABLE)
+		$row = $this->db->table(DbAuthorRepository::TABLE)
 			->where('login', $login)
 			->fetch();
 
