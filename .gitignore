@@ -3,6 +3,9 @@
 /.settings
 /.buildpath
 
+# IntelliJ IDEA
+/.idea
+
 # Nette
 /app/config/config.local.neon
 
