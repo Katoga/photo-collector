@@ -31,6 +31,6 @@ VALUES (
 	NULL,
 	'Admin',
 	'admin',
-	'$2y$10$TYulxqRbX3yVaE13RoR6TeaIG/NCagmKytaqWTaSUk8r8DfuWX.vS',
+	'$2y$10$oX.pGHsiu2ZHf38.oOXzJek5SATIRcRu7dwnHi6MgKRVNONnKUsoa', -- "adminace"
 	'admin'
 );
