@@ -9,7 +9,7 @@
 
 <body>
 	{if $user->loggedIn}
-		<h2><a href={plink Password:}" title="change password">{$user->identity->name}</a></h2>
+		<h2><a href={plink Password:}" title="{_txt.layout.changePassword}">{$user->identity->name}</a></h2>
 		{control mainMenu}
 	{/if}
 

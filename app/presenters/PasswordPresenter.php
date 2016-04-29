@@ -1,7 +1,6 @@
 <?php
 namespace App\Presenters;
 
-use App\Components\ChangePasswordForm;
 use App\Model\AuthorRepositoryInterface;
 use Nette\Application\UI\Form;
 use Nette\Security\AuthenticationException;
@@ -12,7 +11,7 @@ use Nette\Utils\ArrayHash;
  * @author Katoga <katoga.cz@hotmail.com>
  * @since 2016-04-17
  */
-class PasswordPresenter extends BasePresenter
+class PasswordPresenter extends AuthedPresenter
 {
 
 	/**
@@ -47,33 +46,32 @@ class PasswordPresenter extends BasePresenter
 
 			// old password OK, change password
 			$this->authorRepository->changePassword($this->getUser()->getId(), $values->new_password);
-			$this->flashMessage('Password changed.');
+			$this->flashMessage($this->translator->translate('txt.password.changed'));
 		} catch (AuthenticationException $e) {
-			$this->flashMessage('Old password is wrong.');
+			$this->flashMessage($this->translator->translate('txt.password.oldIsWrong'));
 		} catch (\Exception $e) {
-			$this->flashMessage('Failed to change password.');
+			$this->flashMessage($this->translator->translate('txt.password.failed'));
 		}
 
 		$this->redirect('Password:');
 	}
 
 	/**
-	 *
-	 * @return ChangePasswordForm
+	 * @return Form
 	 */
 	protected function createComponentChangePasswordForm()
 	{
 		$form = new Form();
 
-		$form->addGroup('Change password');
-		$form->addPassword('password', 'Current password')
-			->setRequired('Enter password.');
-		$form->addPassword('new_password', 'New password')
-			->setRequired('Enter new password.')
-			->addRule(Form::MIN_LENGTH, sprintf('Password has to be at least %d chars long.', AuthorPresenter::PASSWORD_MIN_LENGTH), AuthorPresenter::PASSWORD_MIN_LENGTH);
-		$form->addPassword('new_password2', 'New password verification')
-			->setRequired('Enter new password verification.')
-			->addRule(Form::EQUAL, 'Passwords does not match!', $form['new_password']);
+		$form->addGroup($this->translator->translate('txt.password.formLabel'));
+		$form->addPassword('password', $this->translator->translate('txt.password.currentPasswordLabel'))
+			->setRequired($this->translator->translate('txt.password.currentPasswordRequired'));
+		$form->addPassword('new_password', $this->translator->translate('txt.password.newPasswordLabel'))
+			->setRequired($this->translator->translate('txt.password.newPasswordRequired'))
+			->addRule(Form::MIN_LENGTH, $this->translator->translate('txt.password.newPasswordRule', ['length' => AuthorPresenter::PASSWORD_MIN_LENGTH]), AuthorPresenter::PASSWORD_MIN_LENGTH);
+		$form->addPassword('new_password2', $this->translator->translate('txt.password.newPasswordVerificationLabel'))
+			->setRequired($this->translator->translate('txt.password.newPasswordVerificationRequired'))
+			->addRule(Form::EQUAL, $this->translator->translate('txt.password.newPasswordVerificationRule'), $form['new_password']);
 
 		$form->setMethod(Form::POST);
 

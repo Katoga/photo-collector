@@ -11,7 +11,7 @@ use Nette\Utils\ArrayHash;
  * @author Katoga <katoga.cz@hotmail.com>
  * @since 2016-04-10
  */
-class EventPresenter extends BasePresenter
+class EventPresenter extends AuthedPresenter
 {
 
 	/**
@@ -52,11 +52,11 @@ class EventPresenter extends BasePresenter
 	{
 		try {
 			$this->eventRepository->addEvent($values->name);
-			$this->flashMessage('New event created.');
+			$this->flashMessage($this->translator->translate('txt.event.newCreated'));
 		} catch (UniqueConstraintViolationException $e) {
-			$this->flashMessage(sprintf('Event "%s" already exists!', $values->name));
+			$this->flashMessage($this->translator->translate('txt.event.newDupe', ['name' => $values->name]));
 		} catch (\Exception $e) {
-			$this->flashMessage('Failed to create new event.');
+			$this->flashMessage($this->translator->translate('txt.event.newFailed'));
 		}
 
 		$this->redirect('Event:');
@@ -70,7 +70,7 @@ class EventPresenter extends BasePresenter
 	{
 		$form = new Form();
 
-		$form->addText('name', 'Name');
+		$form->addText('name', $this->translator->translate('txt.event.nameLabel'));
 
 		$form->setMethod(Form::POST);
 

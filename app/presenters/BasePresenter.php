@@ -1,7 +1,7 @@
 <?php
 namespace App\Presenters;
 
-use App\Components\MainMenu;
+use Kdyby\Translation\ITranslator;
 use Nette\Application\UI\Presenter;
 
 /**
@@ -11,22 +11,16 @@ use Nette\Application\UI\Presenter;
  */
 class BasePresenter extends Presenter
 {
-
-	protected function startup()
-	{
-		parent::startup();
-
-		if (!$this->getUser()->isLoggedIn()) {
-			$this->redirect('Auth:');
-		}
-	}
+	/**
+	 * @var ITranslator
+	 */
+	protected $translator;
 
 	/**
-	 *
-	 * @return MainMenu
+	 * @param ITranslator $translator
 	 */
-	protected function createComponentMainMenu()
+	public function injectTranslator(ITranslator $translator)
 	{
-		return new MainMenu();
+		$this->translator = $translator;
 	}
 }

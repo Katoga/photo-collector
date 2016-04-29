@@ -9,7 +9,7 @@ use Nette\Application\Responses\FileResponse;
  * @author Katoga <katoga.cz@hotmail.com>
  * @since 2016-04-11
  */
-class FilePresenter extends BasePresenter
+class FilePresenter extends AuthedPresenter
 {
 
 	/**

@@ -11,7 +11,7 @@ use Nette\Utils\ArrayHash;
  * @author Katoga <katoga.cz@hotmail.com>
  * @since 2016-04-16
  */
-class AuthorPresenter extends BasePresenter
+class AuthorPresenter extends AuthedPresenter
 {
 
 	const NAME_MIN_LENGTH = 3;
@@ -56,11 +56,11 @@ class AuthorPresenter extends BasePresenter
 	{
 		try {
 			$this->authorRepository->addAuthor($values->name, $values->password, $values->roles);
-			$this->flashMessage('New author created.');
+			$this->flashMessage($this->translator->translate('txt.author.newAuthorCreated'));
 		} catch (UniqueConstraintViolationException $e) {
-			$this->flashMessage(sprintf('Author "%s" already exists!', $values->name));
+			$this->flashMessage($this->translator->translate('txt.author.newAuthorDuplicite', ['name' => $values->name]));
 		} catch (\Exception $e) {
-			$this->flashMessage('Failed to create new author.');
+			$this->flashMessage($this->translator->translate('txt.author.newAuthorFailed'));
 		}
 
 		$this->redirect('Author:');
@@ -74,21 +74,21 @@ class AuthorPresenter extends BasePresenter
 	{
 		$form = new Form();
 
-		$form->addGroup('New author');
-		$form->addText('name', 'Name')
-			->setRequired('Enter name.')
-			->addRule(Form::MIN_LENGTH, sprintf('Name has to be at least %d chars long.', self::NAME_MIN_LENGTH), self::NAME_MIN_LENGTH);
-		$form->addPassword('password', 'Password')
-			->setRequired('Enter password.')
-			->addRule(Form::MIN_LENGTH, sprintf('Password has to be at least %d chars long.', self::PASSWORD_MIN_LENGTH), self::PASSWORD_MIN_LENGTH);
-		$form->addPassword('password2', 'Password verification')
-			->setRequired('Enter password verification.')
-			->addRule(Form::EQUAL, 'Passwords does not match!', $form['password']);
+		$form->addGroup($this->translator->translate('txt.author.formLabel'));
+		$form->addText('name', $this->translator->translate('txt.author.nameLabel'))
+			->setRequired($this->translator->translate('txt.author.nameRequired'))
+			->addRule(Form::MIN_LENGTH, $this->translator->translate('txt.author.nameRule', ['min_length' => self::NAME_MIN_LENGTH]), self::NAME_MIN_LENGTH);
+		$form->addPassword('password', $this->translator->translate('txt.author.passwordLabel'))
+			->setRequired($this->translator->translate('txt.author.passwordRequired'))
+			->addRule(Form::MIN_LENGTH, $this->translator->translate('txt.author.passwordRule', ['min_length' => self::PASSWORD_MIN_LENGTH]), self::PASSWORD_MIN_LENGTH);
+		$form->addPassword('password2', $this->translator->translate('txt.author.passwordVerificationLabel'))
+			->setRequired($this->translator->translate('txt.author.passwordVerificationRequired'))
+			->addRule(Form::EQUAL, $this->translator->translate('txt.author.passwordVerificationRule'), $form['password']);
 
 		$roles = [
 			'admin' => 'Admin'
 		];
-		$form->addCheckboxList('roles', 'Roles', $roles);
+		$form->addCheckboxList('roles', $this->translator->translate('txt.author.rolesLabel'), $roles);
 
 		$form->setMethod(Form::POST);
 

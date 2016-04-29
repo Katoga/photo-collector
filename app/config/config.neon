@@ -3,7 +3,6 @@
 
 parameters:
 	dataRootDir: %appDir%/../data
-	dbFile: %appDir%/db/photo_collector.sqlite3
 
 php:
 	date.timezone: Europe/Prague
@@ -29,6 +28,15 @@ services:
 	eventRepository: App\Model\DbEventRepository(@db)
 	authenticator: App\Model\DbAuthenticator(@db)
 
+extensions:
+	translation: Kdyby\Translation\DI\TranslationExtension
+
 database:
 	default:
-		dsn: 'sqlite:%dbFile%'
+
+translation:
+	default: cs
+	resolvers:
+		session: off
+		request: off
+		header: on

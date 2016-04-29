@@ -1,0 +1,78 @@
+menu:
+	events: "Události"
+	authors: "Autoři"
+	upload: "Nahrát"
+	browse: "Prohlížet"
+	logout: "Odhlásit"
+
+author:
+	newAuthorCreated: "Nový autor vytvořen."
+	newAuthorFailed: "Vytvoření nového autora selhalo."
+	newAuthorDuplicite: 'Autor "%name%" již existuje!'
+
+	formLabel: "Nový autor"
+
+	nameLabel: "Jméno"
+	nameRequired: "Zadej jméno."
+	nameRule: "Jméno musí být dlouhé alespoň %min_length% znaků."
+
+	passwordLabel: "Heslo"
+	passwordRequired: "Zadej heslo."
+	passwordRule: "Heslo musí být dlouhé alespoň %min_length% znaků."
+
+	passwordVerificationLabel: "Ověření hesla"
+	passwordVerificationRequired: "Zadej ověření hesla."
+	passwordVerificationRule: "Hesla se neshodují."
+
+	rolesLabel: "Role"
+
+auth:
+	loginLabel: "Login"
+	passwordLabel: "Heslo"
+	loginButton: "Prihlásit"
+
+	loginRequired: "Zadej login."
+	passwordRequired: "Zadej heslo."
+
+event:
+	nameLabel: "Název"
+
+upload:
+	eventLabel: "Událost"
+	fileLabel: "Soubor"
+	photosRuleLength: "Zadej alespoň %min_files% souborů."
+	photosRuleType: "Soubor musí být JPEG nebo ZIP."
+
+password:
+	formLabel: "Změna hesla"
+
+	currentPasswordLabel: "Současné heslo"
+	currentPasswordRequired: "Zadej současné heslo."
+
+	newPasswordLabel: "Nové heslo"
+	newPasswordRequired: "Zadej nové heslo."
+	newPasswordRule: "Nové heslo musí být dlouhé alespoň %min_length% znaků."
+
+	newPasswordVerificationLabel: "Ověření nového hesla"
+	newPasswordVerificationRequired: "Zadej ověření nového hesla."
+	newPasswordVerificationRule: "Nová hesla se neshodují."
+
+browse:
+	noPhotos: "Žádné fotky."
+
+homepage:
+	welcome: "Vítej!"
+
+layout:
+	changePassword: "Změnit heslo"
+
+title:
+    auth: "Přihlášení"
+    event: "Události"
+    author: "Autoři"
+    upload: "Nahrání fotek"
+    password: "Změna hesla"
+    browse: "Prohlížení fotek"
+    browseEvent: "Prohlížení '%event%'"
+    browseAuthor: "Prohlížení '%event%' od '%author%'"
+

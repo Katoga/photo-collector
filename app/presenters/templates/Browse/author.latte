@@ -6,6 +6,10 @@
 <img src="{plink File:default $file[event], $file[author], $file[filename]}" alt="{$file[filename]}" />
 {/foreach}
 {else}
-nothing
+{_txt.browse.noPhotos}
 {/if}
+{/block}
+
+{block title}
+	{_txt.title.browseAuthor, [event => $event, author => $author]}
 {/block}

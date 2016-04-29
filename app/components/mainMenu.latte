@@ -1,19 +1,19 @@
 <nav>
 	<ul>
 		<li n:if="$user->isInRole(admin)">
-			<a href="{plink Event:}">Events</a>
+			<a href="{plink Event:}">{_txt.menu.events}</a>
 		</li>
 		<li n:if="$user->isInRole(admin)">
-			<a href="{plink Author:}">Authors</a>
+			<a href="{plink Author:}">{_txt.menu.authors}</a>
 		</li>
 		<li>
-			<a href="{plink Upload:}">Upload</a>
+			<a href="{plink Upload:}">{_txt.menu.upload}</a>
 		</li>
 		<li>
-			<a href="{plink Browse:}">Browse</a>
+			<a href="{plink Browse:}">{_txt.menu.browse}</a>
 		</li>
 		<li>
-			<a href="{plink Auth:logout}">Logout</a>
+			<a href="{plink Auth:logout}">{_txt.menu.logout}</a>
 		</li>
 	</ul>
 </nav>

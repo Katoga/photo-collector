@@ -12,7 +12,7 @@ use App\Model\AuthorRepositoryInterface;
  * @author Katoga <katoga.cz@hotmail.com>
  * @since 2016-04-10
  */
-class BrowsePresenter extends BasePresenter
+class BrowsePresenter extends AuthedPresenter
 {
 
 	/**

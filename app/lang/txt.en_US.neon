@@ -1,0 +1,78 @@
+menu:
+	events: "Events"
+	authors: "Authors"
+	upload: "Upload"
+	browse: "Browse"
+	logout: "Logout"
+
+author:
+	newAuthorCreated: "New author created."
+	newAuthorFailed: "Failed to create new author."
+	newAuthorDuplicite: 'Author "%name%" already exists!'
+
+	formLabel: "New author"
+
+	nameLabel: "Name"
+	nameRequired: "Enter name."
+	nameRule: "Name has to be at least %min_length% characters long."
+
+	passwordLabel: "Password"
+	passwordRequired: "Enter password."
+	passwordRule: "Password has to be at least %min_length% characters long."
+
+	passwordVerificationLabel: "Password verification"
+	passwordVerificationRequired: "Enter password verification."
+	passwordVerificationRule: "Passwords do not match."
+
+	rolesLabel: "Roles"
+
+auth:
+	loginLabel: "Login"
+	passwordLabel: "Password"
+	loginButton: "Log in"
+
+	loginRequired: "Enter login."
+	passwordRequired: "Enter password."
+
+event:
+	nameLabel: "Name"
+
+upload:
+	eventLabel: "Event"
+	fileLabel: "File"
+	photosRuleLength: "Add %min_files% or more files."
+	photosRuleType: "File has to be JPEG or ZIP."
+
+password:
+	formLabel: "Change password"
+
+	currentPasswordLabel: "Current password"
+	currentPasswordRequired: "Enter current password."
+
+	newPasswordLabel: "New password"
+	newPasswordRequired: "Enter new password."
+	newPasswordRule: "New password has to be at least %min_length% characters long."
+
+	newPasswordVerificationLabel: "New password verification"
+	newPasswordVerificationRequired: "Enter new password verification."
+	newPasswordVerificationRule: "New passwords do not match."
+
+browse:
+	noPhotos: "No photos."
+
+homepage:
+	welcome: "Welcome!"
+
+layout:
+	changePassword: "Change password"
+
+title:
+    auth: "Authenticate"
+    event: "Events"
+    author: "Authors"
+    upload: "Upload"
+    password: "Password change"
+    browse: "Browse photos"
+    browseEvent: "Browse '%event%'"
+    browseAuthor: "Browse '%event%' from '%author%'"
+
